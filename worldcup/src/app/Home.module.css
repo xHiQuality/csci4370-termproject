@@ -12,7 +12,7 @@
     align-items: center;
     justify-content: flex-start;
     padding: 2rem;
-    font-family: var(--pixel-font);
+    font-family: 'Press Start 2P', Arial, sans-serif;
 }
 .logoContainer {
     display: flex;
@@ -32,7 +32,7 @@
 .title {
     font-size: 3.5rem;
     color: #ffffff;
-    font-family: var(--pixel-font);
+    font-family: 'Press Start 2P', Arial, sans-serif;
     font-weight: bold;
     margin-bottom: 1.5rem;
     text-align: center;
@@ -47,5 +47,19 @@
     backdrop-filter: blur(10px);
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    font-family: var(--pixel-font);
+    font-family: 'Press Start 2P', Arial, sans-serif;
 }
+.button {
+    background-color: #ff4d4d !important; /* Red button */
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+

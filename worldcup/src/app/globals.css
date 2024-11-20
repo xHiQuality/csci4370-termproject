@@ -28,3 +28,19 @@ body {
   letter-spacing: 1px;
   color: var(--foreground);
 }
+.button {
+  background-color: #ff4d4d !important; /* Red button */
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #e60000; /* Darker red on hover */
+}

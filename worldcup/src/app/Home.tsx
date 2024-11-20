@@ -38,13 +38,14 @@ return (
     <div className={styles.logoContainer}>
         <img
         src="/images/logo.png"
-        alt="Pixel Pulse Logo"
+        alt="Logo"
         className={styles.logo}
         />
     </div>
 
     <h1 className={`pixelated-text ${styles.title}`}>World Cup Queries</h1>
     <Signup onAddUser={addUserHandler} />
+
     </div>
 );
 }
