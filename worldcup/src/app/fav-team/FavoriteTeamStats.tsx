@@ -7,25 +7,21 @@ export default function FavoriteTeamStats() {
     const [teamName, setTeamName] = useState("");
     const [teamData, setTeamData] = useState<any>(null);
 
+    const teams = ["Team A", "Team B", "Team C", "Team D"]; // Mock teams for dropdown
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Simulate fetching team stats with mock data
+        // Mock data to simulate fetching team stats
         const mockData = {
-            squad: "Squad information about players and roles. Example: Forward, Midfield.",
+            flag: "🏳️",
+            topScorers: ["Player 1", "Player 2", "Player 3"],
+            mostCaps: ["Player A", "Player B", "Player C"],
             players: [
-                { name: "Player A", position: "Forward", goals: 10 },
-                { name: "Player B", position: "Midfield", assists: 8 },
+                { name: "Player A", position: "Forward", age: 28, caps: 100, goals: 45 },
+                { name: "Player B", position: "Midfielder", age: 25, caps: 80, goals: 20 },
+                { name: "Player C", position: "Defender", age: 30, caps: 110, goals: 10 },
             ],
-            clubs: [
-                { name: "Club A", location: "City A" },
-                { name: "Club B", location: "City B" },
-            ],
-            performance: {
-                tournamentsPlayed: 5,
-                bestFinish: "Semifinals",
-                recentPerformance: "Won last 3 matches",
-            },
         };
 
         setTeamData(mockData);
@@ -37,17 +33,24 @@ export default function FavoriteTeamStats() {
                 <h1 className={styles.title}>Favorite Team Stats</h1>
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formField}>
-                        <label htmlFor="teamName" className={styles.label}>
-                            Team Name
+                        <label htmlFor="teamDropdown" className={styles.label}>
+                            Select Your Team
                         </label>
-                        <input
-                            id="teamName"
-                            type="text"
+                        <select
+                            id="teamDropdown"
                             value={teamName}
                             onChange={(e) => setTeamName(e.target.value)}
-                            placeholder="Enter team name"
                             className={styles.inputField}
-                        />
+                        >
+                            <option value="" disabled>
+                                Choose a team
+                            </option>
+                            {teams.map((team, index) => (
+                                <option key={index} value={team}>
+                                    {team}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <button type="submit" className={styles.submitButton}>
                         Get Stats
@@ -56,37 +59,39 @@ export default function FavoriteTeamStats() {
 
                 {teamData && (
                     <div className={styles.results}>
-                        <h2 className={styles.resultsTitle}>Team Statistics</h2>
-                        <p>
-                            <strong>Squad:</strong> {teamData.squad}
-                        </p>
-                        <h3 className={styles.subTitle}>Players:</h3>
-                        <ul>
-                            {teamData.players.map((player: any, index: number) => (
-                                <li key={index}>
-                                    <strong>{player.name}</strong> - Position: {player.position},{" "}
-                                    {player.goals ? `Goals: ${player.goals}` : `Assists: ${player.assists}`}
-                                </li>
-                            ))}
-                        </ul>
-                        <h3 className={styles.subTitle}>Clubs:</h3>
-                        <ul>
-                            {teamData.clubs.map((club: any, index: number) => (
-                                <li key={index}>
-                                    <strong>{club.name}</strong> - Location: {club.location}
-                                </li>
-                            ))}
-                        </ul>
-                        <h3 className={styles.subTitle}>Performance:</h3>
-                        <p>
-                            <strong>Tournaments Played:</strong> {teamData.performance.tournamentsPlayed}
-                        </p>
-                        <p>
-                            <strong>Best Finish:</strong> {teamData.performance.bestFinish}
-                        </p>
-                        <p>
-                            <strong>Recent Performance:</strong> {teamData.performance.recentPerformance}
-                        </p>
+                        <h2 className={styles.resultsTitle}>{teamName}</h2>
+                        <div className={styles.flagSection}>
+                            <span className={styles.flag}>{teamData.flag}</span>
+                        </div>
+                        <div className={styles.statsRow}>
+                            <div className={styles.statsBox}>
+                                <p className={styles.subTitle}>Top 3 Goal Scorers</p>
+                                <ul>
+                                    {teamData.topScorers.map((scorer, index) => (
+                                        <li key={index}>{scorer}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className={styles.statsBox}>
+                                <p className={styles.subTitle}>Top 3 Caps</p>
+                                <ul>
+                                    {teamData.mostCaps.map((player, index) => (
+                                        <li key={index}>{player}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                        <div className={styles.sophisticatedStats}>
+                            <h3 className={styles.subTitle}>Player Statistics</h3>
+                            <ul>
+                                {teamData.players.map((player, index) => (
+                                    <li key={index}>
+                                        {player.name} - {player.position}, Age: {player.age}, Caps:{" "}
+                                        {player.caps}, Goals: {player.goals}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
                 )}
             </div>
