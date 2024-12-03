@@ -7,8 +7,12 @@ module.exports = (sequelize,Sequelize) => {
             allowNull: true
         },
         Team: {
-            type: Sequelize.TEXT,
-            allowNull: true
+            type: Sequelize.STRING(20),
+            allowNull: true,
+            references: {
+                model: 'TEAMS',
+                key: 'country_name'
+            }
         },
         FIFA_Ranking: {
             type: Sequelize.INTEGER,

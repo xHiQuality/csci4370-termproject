@@ -12,6 +12,8 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+
+db.teams = require("./teams.js")(sequelize,Sequelize)
 db.squads_2022 = require("./2022_squads.js")(sequelize, Sequelize)
 db.world_cup_groups_2022 = require("./2022_world_cup_groups.js")(sequelize,Sequelize)
 db.world_cup_matches_2022 = require("./2022_world_cup_matches.js")(sequelize,Sequelize)

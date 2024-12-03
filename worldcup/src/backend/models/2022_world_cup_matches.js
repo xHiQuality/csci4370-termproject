@@ -9,10 +9,6 @@ module.exports = (sequelize,Sequelize) => {
         },
         Year: {
             type: Sequelize.INTEGER,
-            references : {
-                model: 'WORLD_CUPS',
-                key: 'Year'
-            },
             allowNull: true
         },
         Date: {
@@ -24,15 +20,15 @@ module.exports = (sequelize,Sequelize) => {
             allowNull: true
         },
         Home_Team: {
-            type: Sequelize.TEXT,
+            type: Sequelize.STRING(20),
             allowNull: true
         },
         Away_Team: {
-            type: Sequelize.TEXT,
+            type: Sequelize.STRING(20),
             allowNull: true
         },
         Host_Team: {
-            type: Sequelize.TEXT,
+            type: Sequelize.STRING(20),
             allowNull: true
         }
     })

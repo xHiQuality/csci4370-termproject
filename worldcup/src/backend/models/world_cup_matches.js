@@ -9,7 +9,11 @@ module.exports = (sequelize,Sequelize) => {
         },
         Year: {
             type: Sequelize.INTEGER,
-            allowNull: true
+            allowNull: true,
+            references : {
+                model: 'WORLD_CUPS',
+                key: 'Year'
+            }
         },
         Date: {
             type: Sequelize.TEXT,
@@ -20,7 +24,7 @@ module.exports = (sequelize,Sequelize) => {
             allowNull: true
         },
         Home_Team: {
-            type: Sequelize.TEXT,
+            type: Sequelize.STRING(30),
             allowNull: true
         },
         Home_Goals: {
@@ -32,7 +36,7 @@ module.exports = (sequelize,Sequelize) => {
             allowNull: true
         },
         Away_Team: {
-            type: Sequelize.TEXT,
+            type: Sequelize.STRING(30),
             allowNull: true
         },
         Win_Conditions: {
@@ -40,7 +44,7 @@ module.exports = (sequelize,Sequelize) => {
             allowNull: true
         },
         Host_Team: {
-            type: Sequelize.TEXT,
+            type: Sequelize.STRING(30),
             allowNull: true
         }
     })

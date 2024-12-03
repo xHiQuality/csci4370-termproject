@@ -16,7 +16,7 @@ module.exports = (sequelize,Sequelize) => {
             allowNull: true
         },
         Home_Team: {
-            type: Sequelize.TEXT,
+            type: Sequelize.STRING(20),
             allowNull: true
         },
         Home_Goals: {
@@ -28,7 +28,7 @@ module.exports = (sequelize,Sequelize) => {
             allowNull: true
         },
         Away_Team: {
-            type: Sequelize.TEXT,
+            type: Sequelize.STRING(20),
             allowNull: true
         },
         Win_Conditions: {
