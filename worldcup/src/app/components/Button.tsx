@@ -4,7 +4,7 @@
     type?: "button" | "submit" | "reset";
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
     children: React.ReactNode;
-    customClass?: string; // Add a prop to accept additional custom classes
+    customClass?: string; 
     }
 
     const Button: React.FC<ButtonProps> = ({
@@ -15,7 +15,7 @@
     }) => {
     return (
         <button
-        className={`button ${customClass}`} // Allow additional custom classes
+        className={`button ${customClass}`}
         type={type}
         onClick={onClick}
         >
