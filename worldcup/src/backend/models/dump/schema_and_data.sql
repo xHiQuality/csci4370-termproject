@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `world_cup` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `world_cup`;
 -- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: localhost    Database: world_cup
@@ -28,10 +26,10 @@ CREATE TABLE `international_matches` (
   `ID` int NOT NULL,
   `Tournament` text,
   `Date` text,
-  `Home_Team` text,
+  `Home_Team` varchar(20) DEFAULT NULL,
   `Home_Goals` int DEFAULT NULL,
   `Away_Goals` int DEFAULT NULL,
-  `Away_Team` text,
+  `Away_Team` varchar(20) DEFAULT NULL,
   `Win_Conditions` text,
   `Home_Stadium` text,
   PRIMARY KEY (`ID`)
@@ -57,7 +55,7 @@ DROP TABLE IF EXISTS `squads_2022s`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `squads_2022s` (
   `ID` bigint NOT NULL,
-  `Team` text,
+  `Team` varchar(20) DEFAULT NULL,
   `Position` text,
   `Player` text,
   `Age` bigint DEFAULT NULL,
@@ -66,7 +64,9 @@ CREATE TABLE `squads_2022s` (
   `WC_Goals` bigint DEFAULT NULL,
   `League` text,
   `Club` text,
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`ID`),
+  KEY `Team_idx` (`Team`),
+  CONSTRAINT `Nation` FOREIGN KEY (`Team`) REFERENCES `teams` (`country_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -90,8 +90,8 @@ DROP TABLE IF EXISTS `teams`;
 CREATE TABLE `teams` (
   `ID` int NOT NULL,
   `country_name` varchar(20) NOT NULL,
-  `flag` varchar(10) NOT NULL,
-  PRIMARY KEY (`ID`)
+  `flag` varchar(200) NOT NULL,
+  PRIMARY KEY (`country_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -101,6 +101,7 @@ CREATE TABLE `teams` (
 
 LOCK TABLES `teams` WRITE;
 /*!40000 ALTER TABLE `teams` DISABLE KEYS */;
+INSERT INTO `teams` VALUES (1,'Argentina','https://em-content.zobj.net/source/apple/391/flag-argentina_1f1e6-1f1f7.png'),(2,'Australia','https://em-content.zobj.net/source/apple/391/flag-australia_1f1e6-1f1fa.png'),(3,'Belgium','https://em-content.zobj.net/source/apple/391/flag-belgium_1f1e7-1f1ea.png'),(4,'Brazil','https://em-content.zobj.net/source/apple/391/flag-brazil_1f1e7-1f1f7.png'),(5,'Cameroon','https://em-content.zobj.net/source/apple/391/flag-cameroon_1f1e8-1f1f2.png'),(6,'Canada','https://em-content.zobj.net/source/apple/391/flag-canada_1f1e8-1f1e6.png'),(7,'Costa Rica','https://em-content.zobj.net/source/apple/391/flag-costa-rica_1f1e8-1f1f7.png'),(8,'Croatia','https://em-content.zobj.net/source/apple/391/flag-croatia_1f1ed-1f1f7.png'),(9,'Denmark','https://em-content.zobj.net/source/apple/391/flag-denmark_1f1e9-1f1f0.png'),(10,'Ecuador','https://em-content.zobj.net/source/apple/391/flag-ecuador_1f1ea-1f1e8.png'),(11,'England','https://em-content.zobj.net/source/apple/391/flag-england_1f3f4-e0067-e0062-e0065-e006e-e0067-e007f.png'),(12,'France','https://em-content.zobj.net/source/apple/391/flag-france_1f1eb-1f1f7.png'),(13,'Germany','https://em-content.zobj.net/source/apple/391/flag-germany_1f1e9-1f1ea.png'),(14,'Ghana','https://em-content.zobj.net/source/apple/391/flag-ghana_1f1ec-1f1ed.png'),(15,'Iran','https://em-content.zobj.net/source/apple/391/flag-iran_1f1ee-1f1f7.png'),(16,'Japan','https://em-content.zobj.net/source/apple/391/flag-japan_1f1ef-1f1f5.png'),(17,'Mexico','https://em-content.zobj.net/source/apple/391/flag-mexico_1f1f2-1f1fd.png'),(18,'Morocco','https://em-content.zobj.net/source/apple/391/flag-morocco_1f1f2-1f1e6.png'),(19,'Netherlands','https://em-content.zobj.net/source/apple/391/flag-netherlands_1f1f3-1f1f1.png'),(20,'Poland','https://em-content.zobj.net/source/apple/391/flag-poland_1f1f5-1f1f1.png'),(21,'Portugal','https://em-content.zobj.net/source/apple/391/flag-portugal_1f1f5-1f1f9.png'),(22,'Qatar','https://em-content.zobj.net/source/apple/391/flag-qatar_1f1f6-1f1e6.png'),(23,'Saudi Arabia','https://em-content.zobj.net/source/apple/391/flag-saudi-arabia_1f1f8-1f1e6.png'),(24,'Senegal','https://em-content.zobj.net/source/apple/391/flag-senegal_1f1f8-1f1f3.png'),(25,'Serbia','https://em-content.zobj.net/source/apple/391/flag-serbia_1f1f7-1f1f8.png'),(26,'South Korea','https://em-content.zobj.net/source/apple/391/flag-south-korea_1f1f0-1f1f7.png'),(27,'Spain','https://em-content.zobj.net/source/apple/391/flag-spain_1f1ea-1f1f8.png'),(28,'Switzerland','https://em-content.zobj.net/source/apple/391/flag-switzerland_1f1e8-1f1ed.png'),(29,'Tunisia','https://em-content.zobj.net/source/apple/391/flag-tunisia_1f1f9-1f1f3.png'),(30,'United States','https://em-content.zobj.net/source/apple/391/flag-united-states_1f1fa-1f1f8.png'),(31,'Uruguay','https://em-content.zobj.net/source/apple/391/flag-uruguay_1f1fa-1f1fe.png'),(32,'Wales','https://em-content.zobj.net/source/apple/391/flag-wales_1f3f4-e0067-e0062-e0077-e006c-e0073-e007f.png');
 /*!40000 ALTER TABLE `teams` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,8 +114,10 @@ DROP TABLE IF EXISTS `world_cup_groups_2022s`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `world_cup_groups_2022s` (
   `Group` text,
-  `Team` text,
-  `FIFA_Ranking` int DEFAULT NULL
+  `Team` varchar(20) DEFAULT NULL,
+  `FIFA_Ranking` int DEFAULT NULL,
+  KEY `Team_idx` (`Team`),
+  CONSTRAINT `Team` FOREIGN KEY (`Team`) REFERENCES `teams` (`country_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -140,12 +143,12 @@ CREATE TABLE `world_cup_matches` (
   `Year` int DEFAULT NULL,
   `Date` text,
   `Stage` text,
-  `Home_Team` text,
+  `Home_Team` varchar(30) DEFAULT NULL,
   `Home_Goals` int DEFAULT NULL,
   `Away_Goals` int DEFAULT NULL,
-  `Away_Team` text,
+  `Away_Team` varchar(30) DEFAULT NULL,
   `Win_Conditions` text,
-  `Host_Team` text,
+  `Host_Team` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `Year_idx` (`Year`),
   CONSTRAINT `Year` FOREIGN KEY (`Year`) REFERENCES `world_cups` (`Year`)
@@ -174,10 +177,12 @@ CREATE TABLE `world_cup_matches_2022s` (
   `Year` int DEFAULT NULL,
   `Date` text,
   `Stage` text,
-  `Home_Team` text,
-  `Away_Team` text,
-  `Host_Team` text,
-  PRIMARY KEY (`ID`)
+  `Home_Team` varchar(20) DEFAULT NULL,
+  `Away_Team` varchar(20) DEFAULT NULL,
+  `Host_Team` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `Home_Team_idx` (`Home_Team`),
+  KEY `Away_Team_idx` (`Away_Team`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -231,4 +236,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-02 19:56:58
+-- Dump completed on 2024-12-02 20:42:56
