@@ -1,0 +1,122 @@
+        @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+        .pageBackground {
+            background-image: url("/images/background.png");
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            padding: 2rem;
+            font-family: "Press Start 2P", Arial, sans-serif;
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #fff;
+        }
+        
+        .subtitle {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            text-align: center;
+        }
+        
+        .groupsSection {
+            margin-bottom: 3rem;
+        }
+        
+        .groups {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        
+        .groupCard {
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 200px;
+            color: #fff;
+            text-align: center;
+        }
+        
+        .groupCard h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .groupCard ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .groupCard li {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+        
+        .simulateButton {
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.25rem;
+            cursor: pointer;
+            margin: 1.5rem auto;
+            display: block;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .simulateButton:hover {
+            background-color: #cc0000;
+        }
+        
+        .bracketSection {
+            margin-top: 2rem;
+        }
+        
+        .bracket {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .round {
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            color: #fff;
+            text-align: center;
+        }
+        
+        .round h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .round ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .round li {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+        
+        .winner {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        
