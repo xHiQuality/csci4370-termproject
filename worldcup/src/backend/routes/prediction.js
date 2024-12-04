@@ -163,9 +163,15 @@ router.get('/all-group-predictions', async (req,res) => {
                     });
                 }
             }
+
+            // Sort teams by points in descending order
+            const sortedTeamPoints = Object.entries(teamPoints)
+                .map(([team, points]) => ({ team, points }))
+                .sort((a, b) => b.points - a.points);
+
             allResults[groupName] = {
                 //matchups: groupResults,
-                teamPoints: Object.entries(teamPoints).map(([team,points]) => ({team,points}))
+                teamPoints: sortedTeamPoints
             }
             // console.log('Group Results:', JSON.stringify(groupResults, null, 2));
             // console.log('All Results:', JSON.stringify(allResults, null, 2));
