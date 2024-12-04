@@ -220,7 +220,8 @@ router.get('/matches/:team1/:team2', async (req,res) => {
     Team1 AS Team,
     SUM(CASE WHEN Result = 'Win' THEN 1 ELSE 0 END) AS Wins,
     SUM(CASE WHEN Result = 'Draw' THEN 1 ELSE 0 END) AS Draws,
-    SUM(CASE WHEN Result = 'Loss' THEN 1 ELSE 0 END) AS Losses
+    SUM(CASE WHEN Result = 'Loss' THEN 1 ELSE 0 END) AS Losses,
+    SUM(CASE WHEN Result = 'Win' OR Result = 'Draw' OR Result = 'Loss') AS Total
 FROM (
     SELECT 
         Home_Team AS Team1,
@@ -232,9 +233,9 @@ FROM (
         END AS Result
     FROM world_cup_matches
     WHERE 
-        (Home_Team = ? AND Away_Team = ?)
+        (Home_Team = "${team1}" AND Away_Team = "${team2}")
         OR 
-        (Home_Team = ? AND Away_Team = ?)
+        (Home_Team = "${team2}" AND Away_Team = "${team1}")
 
     UNION ALL
             
@@ -248,13 +249,12 @@ FROM (
         END AS Result
     FROM world_cup_matches
     WHERE 
-        (Home_Team = ? AND Away_Team = ?)
+        (Home_Team = "${team1}" AND Away_Team = "${team2}")
         OR 
-        (Home_Team = ? AND Away_Team = ?)
+        (Home_Team = "${team2}" AND Away_Team = "${team1}")
 ) AS CombinedResults
 GROUP BY Team1;
             `,
-            [team1,team2,team1,team2,team1,team2,team1,team2],
             (err, results) => {
                 if (err) {
                     console.error('Database error:',err);
