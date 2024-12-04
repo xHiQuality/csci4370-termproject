@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+.pageContainer {
+    background-image: url("/images/background.png");
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    font-family: "Press Start 2P", Arial, sans-serif;
+}
+
+.title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.description {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+}
+
+.groupsContainer {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 2rem;
+}
+
+.groupBox {
+    background-color: #ffffff;
+    color: #333;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.groupTitle {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.teamList {
+    list-style: none;
+    padding: 0;
+}
+
+.teamItem {
+    font-size: 1rem;
+    margin: 0.2rem 0;
+}
+
+.bracketContainer {
+    width: 100%;
+    max-width: 800px;
+}
+
+.roundContainer {
+    margin-bottom: 2rem;
+}
+
+.roundTitle {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+}
+
+.matchBox {
+    background-color: #ffffff;
+    color: #333;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.winner {
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.startButton {
+    background-color: #ff0000;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    font-family: "Press Start 2P", Arial, sans-serif;
+    transition: background-color 0.3s ease;
+    margin-top: 2rem;
+}
