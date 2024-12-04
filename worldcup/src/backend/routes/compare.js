@@ -2,29 +2,6 @@ const express = require('express');
 const pool = require('../db/connection.js');
 const router = express.Router();
 
-//Route to get all 4 teams in a specific group
-router.get('/:group', async (req,res) => {
-    const { group } = req.params;
-
-    try {
-        pool.query(
-            `SELECT Team
-            FROM world_cup_groups_2022s WHERE world_cup_groups_2022s.Group = ?`,
-            [group],
-            (err, results) => {
-                if (err) {
-                    console.error('Database error:',err);
-                    return res.status(500).json({error: 'Failed to fetch groups'})
-                }
-                res.json(results)
-            }
-        );
-    } catch (error) {
-        console.error('Unexpected error:', error);
-        res.status(500).json({error: 'Server error'})
-    }
-});
-
 router.get('/matches/:team1/:team2', async (req,res) => {
     const { team1,team2 } = req.params;
 
@@ -36,7 +13,7 @@ router.get('/matches/:team1/:team2', async (req,res) => {
     SUM(CASE WHEN Result = 'Win' THEN 1 ELSE 0 END) AS Wins,
     SUM(CASE WHEN Result = 'Draw' THEN 1 ELSE 0 END) AS Draws,
     SUM(CASE WHEN Result = 'Loss' THEN 1 ELSE 0 END) AS Losses,
-    SUM(CASE WHEN Result = 'Win' OR Result = 'Draw' OR Result = 'Loss') AS Total
+    SUM(CASE WHEN Result = 'Win' OR Result = 'Draw' OR Result = 'Loss' THEN 1 ELSE 0 END) AS Total
 FROM (
     SELECT 
         Home_Team AS Team1,
@@ -82,6 +59,32 @@ GROUP BY Team1;
         console.error('Unexpected error:', error);
         res.status(500).json({error: 'Server error'})
     }
+});
+
+
+router.get('/info/:team/', async (req,res) => {
+    const { team } = req.params;
+
+    try {
+
+        pool.query(
+            `SELECT Team, FIFA_Ranking, \`Group\`
+            FROM world_cup_groups_2022s
+            WHERE Team = '${team}';`,
+            (err, results) => {
+                if (err) {
+                    console.error('Database error:',err);
+                    return res.status(500).json({error: 'Failed to fetch groups'})
+                }
+                res.json(results)
+            }
+        );
+
+    } catch (error) {
+        console.error('Unexpected error:', error);
+        res.status(500).json({error: 'Server error'})
+    }
+
 });
 
 module.exports= router;
