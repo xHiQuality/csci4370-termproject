@@ -1,106 +1,98 @@
-"use client";
+    "use client";
 
-import { useState } from "react";
+    import { useState } from "react";
 import styles from "./PredictorPage.module.css";
 
-export default function PredictorPage() {
-    const [showBracket, setShowBracket] = useState(false);
+    export default function PredictorPage() {
+    const groups = [
+        { groupName: "Group A", teams: ["Team A1", "Team A2", "Team A3", "Team A4"] },
+        { groupName: "Group B", teams: ["Team B1", "Team B2", "Team B3", "Team B4"] },
+        { groupName: "Group C", teams: ["Team C1", "Team C2", "Team C3", "Team C4"] },
+        { groupName: "Group D", teams: ["Team D1", "Team D2", "Team D3", "Team D4"] },
+        { groupName: "Group E", teams: ["Team E1", "Team E2", "Team E3", "Team E4"] },
+        { groupName: "Group F", teams: ["Team F1", "Team F2", "Team F3", "Team F4"] },
+        { groupName: "Group G", teams: ["Team G1", "Team G2", "Team G3", "Team G4"] },
+        { groupName: "Group H", teams: ["Team H1", "Team H2", "Team H3", "Team H4"] },
+    ];
 
-    // Mock data
-    const groups = {
-        GroupA: ["Team 1", "Team 2", "Team 3", "Team 4"],
-        GroupB: ["Team 5", "Team 6", "Team 7", "Team 8"],
+    const rounds = {
+        roundOf16: ["Team A1", "Team B2", "Team C1", "Team D2", "Team E1", "Team F2", "Team G1", "Team H2"],
+        quarterfinals: ["Winner 1", "Winner 2", "Winner 3", "Winner 4"],
+        semifinals: ["Winner Q1", "Winner Q2"],
+        finals: ["Winner S1", "Winner S2"],
+        winner: "Champion",
     };
 
-    const bracket = [
-        { match: "Quarterfinal 1", team1: "Team 1", team2: "Team 8", winner: "Team 1" },
-        { match: "Quarterfinal 2", team1: "Team 5", team2: "Team 4", winner: "Team 4" },
-        { match: "Quarterfinal 3", team1: "Team 6", team2: "Team 3", winner: "Team 6" },
-        { match: "Quarterfinal 4", team1: "Team 2", team2: "Team 7", winner: "Team 7" },
-    ];
+    const [showBracket, setShowBracket] = useState(false);
 
-    const semiFinals = [
-        { match: "Semifinal 1", team1: "Team 1", team2: "Team 6", winner: "Team 1" },
-        { match: "Semifinal 2", team1: "Team 4", team2: "Team 7", winner: "Team 7" },
-    ];
-
-    const finals = { match: "Final", team1: "Team 1", team2: "Team 7", winner: "Team 1" };
+    const handleSimulateBracket = () => {
+        setShowBracket(true);
+    };
 
     return (
-        <div className={styles.pageContainer}>
-            <h1 className={styles.title}>Predictor Page</h1>
-            <p className={styles.description}>
-                This predictor model takes data such as groups, FIFA rankings, and historical performance to simulate the World Cup brackets.
-            </p>
-
-            {/* Group Stage */}
-            <div className={styles.groupsContainer}>
-                <h2 className={styles.subTitle}>Group Stage</h2>
-                {Object.entries(groups).map(([groupName, teams]) => (
-                    <div key={groupName} className={styles.groupBox}>
-                        <h3 className={styles.groupTitle}>{groupName}</h3>
-                        <ul className={styles.teamList}>
-                            {teams.map((team, index) => (
-                                <li key={index} className={styles.teamItem}>
-                                    {team}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
-            </div>
-
-            {/* Bracket Simulation */}
-            {showBracket && (
-                <div className={styles.bracketContainer}>
-                    <h2 className={styles.subTitle}>Bracket Simulation</h2>
-
-                    {/* Quarterfinals */}
-                    <div className={styles.roundContainer}>
-                        <h3 className={styles.roundTitle}>Quarterfinals</h3>
-                        {bracket.map((match, index) => (
-                            <div key={index} className={styles.matchBox}>
-                                <p>
-                                    {match.team1} vs {match.team2}
-                                </p>
-                                <p className={styles.winner}>Winner: {match.winner}</p>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Semifinals */}
-                    <div className={styles.roundContainer}>
-                        <h3 className={styles.roundTitle}>Semifinals</h3>
-                        {semiFinals.map((match, index) => (
-                            <div key={index} className={styles.matchBox}>
-                                <p>
-                                    {match.team1} vs {match.team2}
-                                </p>
-                                <p className={styles.winner}>Winner: {match.winner}</p>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Final */}
-                    <div className={styles.roundContainer}>
-                        <h3 className={styles.roundTitle}>Final</h3>
-                        <div className={styles.matchBox}>
-                            <p>
-                                {finals.team1} vs {finals.team2}
-                            </p>
-                            <p className={styles.winner}>Winner: {finals.winner}</p>
-                        </div>
-                    </div>
+        <div className={styles.pageBackground}>
+        <h1 className={styles.title}>Predictor Page</h1>
+        <div className={styles.groupsSection}>
+            <h2 className={styles.subtitle}>Group Stage</h2>
+            <div className={styles.groups}>
+            {groups.map((group, index) => (
+                <div key={index} className={styles.groupCard}>
+                <h3>{group.groupName}</h3>
+                <ul>
+                    {group.teams.map((team, idx) => (
+                    <li key={idx}>{team}</li>
+                    ))}
+                </ul>
                 </div>
-            )}
-
-            {/* Show Bracket Button */}
-            <button
-                className={styles.startButton}
-                onClick={() => setShowBracket(!showBracket)}
-            >
-                {showBracket ? "Hide Bracket" : "Simulate Bracket"}
-            </button>
+            ))}
+            </div>
+        </div>
+        <button className={styles.simulateButton} onClick={handleSimulateBracket}>
+            Simulate Bracket
+        </button>
+        {showBracket && (
+            <div className={styles.bracketSection}>
+            <h2 className={styles.subtitle}>Knockout Stage</h2>
+            <div className={styles.bracket}>
+                <div className={styles.round}>
+                <h3>Round of 16</h3>
+                <ul>
+                    {rounds.roundOf16.map((team, idx) => (
+                    <li key={idx}>{team}</li>
+                    ))}
+                </ul>
+                </div>
+                <div className={styles.round}>
+                <h3>Quarterfinals</h3>
+                <ul>
+                    {rounds.quarterfinals.map((team, idx) => (
+                    <li key={idx}>{team}</li>
+                    ))}
+                </ul>
+                </div>
+                <div className={styles.round}>
+                <h3>Semifinals</h3>
+                <ul>
+                    {rounds.semifinals.map((team, idx) => (
+                    <li key={idx}>{team}</li>
+                    ))}
+                </ul>
+                </div>
+                <div className={styles.round}>
+                <h3>Finals</h3>
+                <ul>
+                    {rounds.finals.map((team, idx) => (
+                    <li key={idx}>{team}</li>
+                    ))}
+                </ul>
+                </div>
+                <div className={styles.round}>
+                <h3>Winner</h3>
+                <p className={styles.winner}>{rounds.winner}</p>
+                </div>
+            </div>
+            </div>
+        )}
         </div>
     );
-}
+    }
