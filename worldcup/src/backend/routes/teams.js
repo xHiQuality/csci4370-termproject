@@ -3,6 +3,7 @@ const pool = require('../db/connection.js');
 const router = express.Router();
 
 // Route: get all country names
+// EXAMPLE: http://localhost:3001/api/teams
 router.get('/', async (req, res) => {
     try {
         pool.query('SELECT country_name FROM teams', (err, results) => {
@@ -19,6 +20,7 @@ router.get('/', async (req, res) => {
 });
 
 //Route: get flag of selected country
+//EXAMPLE: http://localhost:3001/api/teams/Belgium/flag
 router.get('/:country/flag', async(req,res) => {
     const { country } = req.params; //get from URL
 
