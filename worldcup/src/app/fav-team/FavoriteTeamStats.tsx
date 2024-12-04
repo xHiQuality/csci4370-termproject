@@ -33,19 +33,39 @@ export default function FavoriteTeamStats() {
 
         try {
             // Fetch flag for the selected team
-            const response = await axios.get(`http://localhost:3001/api/teams/${teamName.toLowerCase()}/flag`);
+            const flagResponse = await axios.get(
+                `http://localhost:3001/api/teams/${teamName.toLowerCase()}/flag`
+            );
+
+            // Fetch top 3 goal scorers for the selected team
+            const scorersResponse = await axios.get(
+                `http://localhost:3001/api/squads/${teamName.toLowerCase()}/top-scorers`
+            );
+
+            // Fetch top 3 caps for the selected team
+            const capsResponse = await axios.get(
+                `http://localhost:3001/api/squads/${teamName.toLowerCase()}/caps`
+            );
+
+            // Fetch all player statistics for the selected team
+            const playersResponse = await axios.get(
+                `http://localhost:3001/api/squads/${teamName.toLowerCase()}`
+            );
+
             setTeamData({
-                flag: response.data.flag || null, // Use the flag from the API or null
-                topScorers: ["Player 1", "Player 2", "Player 3"], // Placeholder data
-                mostCaps: ["Player A", "Player B", "Player C"], // Placeholder data
-                players: [
-                    { name: "Player A", position: "Forward", age: 28, caps: 100, goals: 45 },
-                    { name: "Player B", position: "Midfielder", age: 25, caps: 80, goals: 20 },
-                    { name: "Player C", position: "Defender", age: 30, caps: 110, goals: 10 },
-                ], // Placeholder data
+                flag: flagResponse.data.flag || null,
+                topScorers: scorersResponse.data.map((player: any) => player.Player),
+                mostCaps: capsResponse.data.map((player: any) => player.Player),
+                players: playersResponse.data.map((player: any) => ({
+                    name: player.Player,
+                    position: player.Position,
+                    age: player.Age,
+                    caps: player.Caps,
+                    goals: player.Goals,
+                })),
             });
         } catch (error) {
-            console.error("Error fetching team flag:", error);
+            console.error("Error fetching team data:", error);
             setTeamData(null);
         }
     };
