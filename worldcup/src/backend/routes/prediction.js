@@ -47,9 +47,9 @@ FROM (
         END AS Result
     FROM world_cup_matches
     WHERE 
-        (Home_Team = ? AND Away_Team = ?)
+        (Home_Team = "${team1}" AND Away_Team = "${team2}")
         OR 
-        (Home_Team = ? AND Away_Team = ?)
+        (Home_Team = "${team2}" AND Away_Team = "${team1}")
 
     UNION ALL
             
@@ -63,13 +63,12 @@ FROM (
         END AS Result
     FROM world_cup_matches
     WHERE 
-        (Home_Team = ? AND Away_Team = ?)
+        (Home_Team = "${team1}" AND Away_Team = "${team2}")
         OR 
-        (Home_Team = ? AND Away_Team = ?)
+        (Home_Team = "${team2}" AND Away_Team = "${team1}")
 ) AS CombinedResults
 GROUP BY Team1;
             `,
-            [team1,team2,team1,team2,team1,team2,team1,team2],
             (err, results) => {
                 if (err) {
                     console.error('Database error:',err);
