@@ -11,67 +11,118 @@
     padding: 2rem;
 }
 
+
 .statsContainer {
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.9);
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 600px;
+    max-width: 800px;
     width: 100%;
-    font-family: "Press Start 2P", sans-serif;
 }
 
 .title {
-    font-size: 1.8rem;
     text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.formField {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 1rem;
 }
 
 .label {
     font-size: 1rem;
     margin-bottom: 0.5rem;
-    display: block;
-}
-
-.formField {
-    margin-bottom: 1.5rem;
 }
 
 .inputField {
-    width: 100%;
-    padding: 0.75rem;
-    margin-top: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-family: "Press Start 2P", sans-serif;
+    padding: 0.5rem;
     font-size: 1rem;
-    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
 }
 
 .submitButton {
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #ff0000;
-    color: #fff;
+    background-color: #ff4d4d;
+    color: white;
+    font-size: 1.2rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
-    font-family: "Press Start 2P", sans-serif;
-    font-size: 1rem;
-    text-align: center;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+    background-color: #e04444;
 }
 
 .results {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
 }
 
 .resultsTitle {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
     text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.flagSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.flag {
+    font-size: 6rem; /* Make the flag emoji larger */
+    text-align: center;
+}
+
+.statsRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.statsBox {
+    flex: 1;
+    padding: 1rem;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .subTitle {
     font-size: 1.2rem;
-    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+/* Relevant classes to style the updated content */
+
+.sophisticatedStats {
+    padding: 1rem;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 1.5rem;
+    text-align: left;
+}
+
+.sophisticatedStats ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sophisticatedStats li {
+    margin: 0.5rem 0;
+    font-size: 1rem;
 }
