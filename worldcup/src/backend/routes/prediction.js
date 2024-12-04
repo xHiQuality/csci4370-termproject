@@ -109,8 +109,8 @@ router.get('/all-group-predictions', async (req,res) => {
                     ) || [{}];
 
                     // debugging
-                    console.log('H2H Home Points:', homeH2HPoints.h2h_points || 0);
-                    console.log('H2H Away Points:', awayH2HPoints.h2h_points || 0);
+                    // console.log('H2H Home Points:', homeH2HPoints.h2h_points || 0);
+                    // console.log('H2H Away Points:', awayH2HPoints.h2h_points || 0);
 
                     
 
@@ -126,19 +126,19 @@ router.get('/all-group-predictions', async (req,res) => {
                         parseFloat(homeStats.avg_goals) || 0, 
                         parseFloat(awayStats.avg_goals) || 0  
                     );
-                    console.log(`Calculating predictor for:`, {
-                        homeTeam: homeTeam.Team,
-                        awayTeam: awayTeam.Team,
-                        highestRank: 61,
-                        homeRank: homeTeam.FIFA_Ranking,
-                        awayRank: awayTeam.FIFA_Ranking,
-                        avgCapsHome: homeStats?.avg_caps || 0,
-                        avgCapsAway: awayStats?.avg_caps || 0,
-                        h2hHome: homeH2HPoints?.h2h_points || 0,
-                        h2hAway: awayH2HPoints?.h2h_points || 0,
-                        avgGoalsHome: homeStats?.avg_goals || 0,
-                        avgGoalsAway: awayStats?.avg_goals || 0,
-                    });
+                    // console.log(`Calculating predictor for:`, {
+                    //     homeTeam: homeTeam.Team,
+                    //     awayTeam: awayTeam.Team,
+                    //     highestRank: 61,
+                    //     homeRank: homeTeam.FIFA_Ranking,
+                    //     awayRank: awayTeam.FIFA_Ranking,
+                    //     avgCapsHome: homeStats?.avg_caps || 0,
+                    //     avgCapsAway: awayStats?.avg_caps || 0,
+                    //     h2hHome: homeH2HPoints?.h2h_points || 0,
+                    //     h2hAway: awayH2HPoints?.h2h_points || 0,
+                    //     avgGoalsHome: homeStats?.avg_goals || 0,
+                    //     avgGoalsAway: awayStats?.avg_goals || 0,
+                    // });
 
                     //Determine Group Outcome
                     let outcome;
@@ -164,15 +164,20 @@ router.get('/all-group-predictions', async (req,res) => {
                 }
             }
             allResults[groupName] = {
-                matchups: groupResults,
+                //matchups: groupResults,
                 teamPoints: Object.entries(teamPoints).map(([team,points]) => ({team,points}))
             }
-            console.log('Group Results:', JSON.stringify(groupResults, null, 2));
-            console.log('All Results:', JSON.stringify(allResults, null, 2));
+            // console.log('Group Results:', JSON.stringify(groupResults, null, 2));
+            // console.log('All Results:', JSON.stringify(allResults, null, 2));
 
         }
+        console.log(
+            'All Results:',
+            JSON.stringify(allResults, null, 2) 
+        );
         
         res.json(allResults);
+        
     } catch (error) {
         console.error(error);
         res.status(500).send('Error computing group predictions')
