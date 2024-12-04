@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-
 const teamsRoutes = require('./routes/teams');
+
 const squadsRoutes = require('./routes/squads_2022s')
 const predictorRoutes = require('./routes/prediction')
 

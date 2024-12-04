@@ -1,30 +1,53 @@
 "use client";
 
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styles from "./FavoriteTeamStats.module.css";
 
 export default function FavoriteTeamStats() {
+    const [teams, setTeams] = useState([]);
     const [teamName, setTeamName] = useState("");
     const [teamData, setTeamData] = useState<any>(null);
 
-    const teams = ["Team A", "Team B", "Team C", "Team D"]; // Mock teams for dropdown
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        // Mock data to simulate fetching team stats
-        const mockData = {
-            flag: "🏳️",
-            topScorers: ["Player 1", "Player 2", "Player 3"],
-            mostCaps: ["Player A", "Player B", "Player C"],
-            players: [
-                { name: "Player A", position: "Forward", age: 28, caps: 100, goals: 45 },
-                { name: "Player B", position: "Midfielder", age: 25, caps: 80, goals: 20 },
-                { name: "Player C", position: "Defender", age: 30, caps: 110, goals: 10 },
-            ],
+    useEffect(() => {
+        // Fetch teams from the API
+        const fetchTeams = async () => {
+            try {
+                const response = await axios.get("http://localhost:3001/api/teams");
+                setTeams(response.data);
+            } catch (error) {
+                console.error("Error fetching teams:", error);
+            }
         };
 
-        setTeamData(mockData);
+        fetchTeams();
+    }, []);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!teamName) {
+            alert("Please select a team!");
+            return;
+        }
+
+        try {
+            // Fetch flag for the selected team
+            const response = await axios.get(`http://localhost:3001/api/teams/${teamName.toLowerCase()}/flag`);
+            setTeamData({
+                flag: response.data.flag || null, // Use the flag from the API or null
+                topScorers: ["Player 1", "Player 2", "Player 3"], // Placeholder data
+                mostCaps: ["Player A", "Player B", "Player C"], // Placeholder data
+                players: [
+                    { name: "Player A", position: "Forward", age: 28, caps: 100, goals: 45 },
+                    { name: "Player B", position: "Midfielder", age: 25, caps: 80, goals: 20 },
+                    { name: "Player C", position: "Defender", age: 30, caps: 110, goals: 10 },
+                ], // Placeholder data
+            });
+        } catch (error) {
+            console.error("Error fetching team flag:", error);
+            setTeamData(null);
+        }
     };
 
     return (
@@ -43,11 +66,11 @@ export default function FavoriteTeamStats() {
                             className={styles.inputField}
                         >
                             <option value="" disabled>
-                                Choose a team
+                                Select a team
                             </option>
-                            {teams.map((team, index) => (
-                                <option key={index} value={team}>
-                                    {team}
+                            {teams.map((team: any, index: number) => (
+                                <option key={index} value={team.country_name}>
+                                    {team.country_name}
                                 </option>
                             ))}
                         </select>
@@ -61,13 +84,21 @@ export default function FavoriteTeamStats() {
                     <div className={styles.results}>
                         <h2 className={styles.resultsTitle}>{teamName}</h2>
                         <div className={styles.flagSection}>
-                            <span className={styles.flag}>{teamData.flag}</span>
+                            {teamData.flag ? (
+                                <img
+                                    src={teamData.flag}
+                                    alt={`${teamName} Flag`}
+                                    className={styles.flag}
+                                />
+                            ) : (
+                                <p>Flag not available</p>
+                            )}
                         </div>
                         <div className={styles.statsRow}>
                             <div className={styles.statsBox}>
                                 <p className={styles.subTitle}>Top 3 Goal Scorers</p>
                                 <ul>
-                                    {teamData.topScorers.map((scorer, index) => (
+                                    {teamData.topScorers.map((scorer: string, index: number) => (
                                         <li key={index}>{scorer}</li>
                                     ))}
                                 </ul>
@@ -75,7 +106,7 @@ export default function FavoriteTeamStats() {
                             <div className={styles.statsBox}>
                                 <p className={styles.subTitle}>Top 3 Caps</p>
                                 <ul>
-                                    {teamData.mostCaps.map((player, index) => (
+                                    {teamData.mostCaps.map((player: string, index: number) => (
                                         <li key={index}>{player}</li>
                                     ))}
                                 </ul>
@@ -84,7 +115,7 @@ export default function FavoriteTeamStats() {
                         <div className={styles.sophisticatedStats}>
                             <h3 className={styles.subTitle}>Player Statistics</h3>
                             <ul>
-                                {teamData.players.map((player, index) => (
+                                {teamData.players.map((player: any, index: number) => (
                                     <li key={index}>
                                         {player.name} - {player.position}, Age: {player.age}, Caps:{" "}
                                         {player.caps}, Goals: {player.goals}
