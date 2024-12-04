@@ -17,38 +17,38 @@ export default function PredictorPage() {
 
     const rounds = {
         roundOf16: [
-            { team1: "Team A1", team2: "Team B2" },
-            { team1: "Team C1", team2: "Team D2" },
-            { team1: "Team E1", team2: "Team F2" },
-            { team1: "Team G1", team2: "Team H2" },
+            { team1: { name: "Team A1", points: 10 }, team2: { name: "Team B2", points: 8 } },
+            { team1: { name: "Team C1", points: 9 }, team2: { name: "Team D2", points: 7 } },
+            { team1: { name: "Team E1", points: 11 }, team2: { name: "Team F2", points: 6 } },
+            { team1: { name: "Team G1", points: 8 }, team2: { name: "Team H2", points: 7 } },
         ],
         quarterfinals: [
-            { team1: "Winner 1", team2: "Winner 2" },
-            { team1: "Winner 3", team2: "Winner 4" },
+            { team1: { name: "Winner 1", points: 12 }, team2: { name: "Winner 2", points: 9 } },
+            { team1: { name: "Winner 3", points: 10 }, team2: { name: "Winner 4", points: 8 } },
         ],
         semifinals: [
-            { team1: "Winner Q1", team2: "Winner Q2" },
+            { team1: { name: "Winner Q1", points: 13 }, team2: { name: "Winner Q2", points: 10 } },
         ],
         finals: [
-            { team1: "Winner S1", team2: "Winner S2" },
+            { team1: { name: "Winner S1", points: 15 }, team2: { name: "Winner S2", points: 12 } },
         ],
-        winner: "Champion",
+        winner: { name: "Champion", points: 20 },
     };
 
     const [showBracket, setShowBracket] = useState(false);
     const [groupResults, setGroupResults] = useState<any>(null);
 
     const handleSimulateBracket = () => {
-        // Mock results for group winners and runners-up
+        // Mock results for group winners and runners-up with points
         const groupResultsMock = {
-            GroupA: { winner: "Team A1", runnerUp: "Team A2" },
-            GroupB: { winner: "Team B1", runnerUp: "Team B2" },
-            GroupC: { winner: "Team C1", runnerUp: "Team C2" },
-            GroupD: { winner: "Team D1", runnerUp: "Team D2" },
-            GroupE: { winner: "Team E1", runnerUp: "Team E2" },
-            GroupF: { winner: "Team F1", runnerUp: "Team F2" },
-            GroupG: { winner: "Team G1", runnerUp: "Team G2" },
-            GroupH: { winner: "Team H1", runnerUp: "Team H2" },
+            GroupA: { winner: { name: "Team A1", points: 9 }, runnerUp: { name: "Team A2", points: 6 } },
+            GroupB: { winner: { name: "Team B1", points: 7 }, runnerUp: { name: "Team B2", points: 5 } },
+            GroupC: { winner: { name: "Team C1", points: 8 }, runnerUp: { name: "Team C2", points: 4 } },
+            GroupD: { winner: { name: "Team D1", points: 10 }, runnerUp: { name: "Team D2", points: 6 } },
+            GroupE: { winner: { name: "Team E1", points: 9 }, runnerUp: { name: "Team E2", points: 6 } },
+            GroupF: { winner: { name: "Team F1", points: 8 }, runnerUp: { name: "Team F2", points: 5 } },
+            GroupG: { winner: { name: "Team G1", points: 7 }, runnerUp: { name: "Team G2", points: 5 } },
+            GroupH: { winner: { name: "Team H1", points: 9 }, runnerUp: { name: "Team H2", points: 6 } },
         };
         setGroupResults(groupResultsMock);
         setShowBracket(true);
@@ -80,12 +80,12 @@ export default function PredictorPage() {
                 <div className={styles.resultsGroupsSection}>
                     <h2 className={styles.subtitle}>Group Stage Results</h2>
                     <div className={styles.groups}>
-                        {Object.entries(groupResults).map(([groupName, result], index) => (
+                        {Object.entries(groupResults).map(([groupName, result]: any, index) => (
                             <div key={index} className={styles.groupCard}>
                                 <h3>{groupName}</h3>
                                 <ul>
-                                    <li>Winner: {result.winner}</li>
-                                    <li>Runner-Up: {result.runnerUp}</li>
+                                    <li>Winner: {result.winner.name} ({result.winner.points} points)</li>
+                                    <li>Runner-Up: {result.runnerUp.name} ({result.runnerUp.points} points)</li>
                                 </ul>
                             </div>
                         ))}
@@ -106,7 +106,9 @@ export default function PredictorPage() {
                             <h3>Round of 16</h3>
                             {rounds.roundOf16.map((match, idx) => (
                                 <div key={idx} className={styles.match}>
-                                    <p>{match.team1} vs {match.team2}</p>
+                                    <p>
+                                        {match.team1.name} ({match.team1.points} points) vs {match.team2.name} ({match.team2.points} points)
+                                    </p>
                                 </div>
                             ))}
                         </div>
@@ -114,7 +116,9 @@ export default function PredictorPage() {
                             <h3>Quarterfinals</h3>
                             {rounds.quarterfinals.map((match, idx) => (
                                 <div key={idx} className={styles.match}>
-                                    <p>{match.team1} vs {match.team2}</p>
+                                    <p>
+                                        {match.team1.name} ({match.team1.points} points) vs {match.team2.name} ({match.team2.points} points)
+                                    </p>
                                 </div>
                             ))}
                         </div>
@@ -122,7 +126,9 @@ export default function PredictorPage() {
                             <h3>Semifinals</h3>
                             {rounds.semifinals.map((match, idx) => (
                                 <div key={idx} className={styles.match}>
-                                    <p>{match.team1} vs {match.team2}</p>
+                                    <p>
+                                        {match.team1.name} ({match.team1.points} points) vs {match.team2.name} ({match.team2.points} points)
+                                    </p>
                                 </div>
                             ))}
                         </div>
@@ -130,13 +136,17 @@ export default function PredictorPage() {
                             <h3>Finals</h3>
                             {rounds.finals.map((match, idx) => (
                                 <div key={idx} className={styles.match}>
-                                    <p>{match.team1} vs {match.team2}</p>
+                                    <p>
+                                        {match.team1.name} ({match.team1.points} points) vs {match.team2.name} ({match.team2.points} points)
+                                    </p>
                                 </div>
                             ))}
                         </div>
                         <div className={styles.round}>
                             <h3>Winner</h3>
-                            <p className={styles.winner}>{rounds.winner}</p>
+                            <p className={styles.winner}>
+                                {rounds.winner.name} ({rounds.winner.points} points)
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -144,3 +154,4 @@ export default function PredictorPage() {
         </div>
     );
 }
+
