@@ -177,7 +177,7 @@ router.get('/all-group-predictions', async (req,res) => {
                         if (coinFlip > 0) {
                             acc.push(teamObj); // Push current team as is
                         } else {
-                            // Swap current team with the previous one
+                            
                             const previousTeam = acc.pop();
                             acc.push(teamObj, previousTeam);
                         }
