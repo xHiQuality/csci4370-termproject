@@ -19,10 +19,22 @@ export default function PredictorPage() {
                 setGroupResults(response.data.groupResults);
                 setKnockoutStages({
                     roundOf16: response.data.roundOf16Results || [],
-                    quarterfinals: response.data.quarterFinalResults || [],
-                    semifinals: response.data.semiFinalResults || [],
-                    finals: response.data.finalResults || [],
-                    winner: response.data.champion || "",
+                    quarterfinals: response.data.quarterFinalMatchups.map((match: any, idx: number) => ({
+                        home: match.home,
+                        away: match.away,
+                        winner: response.data.quarterFinalResults[idx]?.winner,
+                    })) || [],
+                    semifinals: response.data.semiFinalMatchups.map((match: any, idx: number) => ({
+                        home: match.home,
+                        away: match.away,
+                        winner: response.data.semiFinalResults[idx]?.winner,
+                    })) || [],
+                    finals: response.data.finalMatchups.map((match: any, idx: number) => ({
+                        home: match.home,
+                        away: match.away,
+                        winner: response.data.finalResults[idx]?.winner,
+                    })) || [],
+                    winner: response.data.champion[0] || "",
                 });
             } catch (error) {
                 console.error("Error fetching group predictions:", error);
@@ -36,8 +48,8 @@ export default function PredictorPage() {
         <div className={styles.pageBackground}>
             <h1 className={styles.title}>Predictor Page</h1>
 
-           {/* Initial Group Stage Section */}
-    <div className={styles.groupsSection}>
+            {/* Initial Group Stage Section */}
+            <div className={styles.groupsSection}>
                 <h2 className={styles.subtitle}>Group Stage</h2>
                 <div className={styles.groups}>
                     {groupResults &&
@@ -77,7 +89,6 @@ export default function PredictorPage() {
                 </div>
             )}
 
-
             {/* Knockout Stage Button */}
             <button
                 className={styles.simulateButton}
@@ -97,7 +108,14 @@ export default function PredictorPage() {
                             <h3>Round of 16</h3>
                             {knockoutStages.roundOf16.map((match: any, idx: number) => (
                                 <p key={idx}>
-                                    {match.matchup} - Winner: {match.winner}
+                                    {match.matchup.replace(
+                                        /(\d[A-H])/g,
+                                        (seed: string) =>
+                                            groupResults[seed[1]].teamPoints.find(
+                                                (team: any) => team.seed === seed
+                                            )?.team || seed
+                                    )}{" "}
+                                    - Winner: {match.winner}
                                 </p>
                             ))}
                         </div>
@@ -107,7 +125,7 @@ export default function PredictorPage() {
                             <h3>Quarterfinals</h3>
                             {knockoutStages.quarterfinals.map((match: any, idx: number) => (
                                 <p key={idx}>
-                                    {match.matchup} - Winner: {match.winner}
+                                    {match.home} vs {match.away} - Winner: {match.winner}
                                 </p>
                             ))}
                         </div>
@@ -117,7 +135,7 @@ export default function PredictorPage() {
                             <h3>Semifinals</h3>
                             {knockoutStages.semifinals.map((match: any, idx: number) => (
                                 <p key={idx}>
-                                    {match.matchup} - Winner: {match.winner}
+                                    {match.home} vs {match.away} - Winner: {match.winner}
                                 </p>
                             ))}
                         </div>
@@ -127,7 +145,7 @@ export default function PredictorPage() {
                             <h3>Finals</h3>
                             {knockoutStages.finals.map((match: any, idx: number) => (
                                 <p key={idx}>
-                                    {match.matchup} - Winner: {match.winner}
+                                    {match.home} vs {match.away} - Winner: {match.winner}
                                 </p>
                             ))}
                         </div>
