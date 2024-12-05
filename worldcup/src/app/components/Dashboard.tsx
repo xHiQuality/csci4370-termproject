@@ -8,13 +8,13 @@ export default function Dashboard() {
     const [selectedTeamA, setSelectedTeamA] = useState("");
     const [selectedTeamB, setSelectedTeamB] = useState("");
     const [comparisonData, setComparisonData] = useState<any>(null);
-    const [teams, setTeams] = useState<string[]>([]);
-    const [flags, setFlags] = useState<{ [key: string]: string }>({});
-    const [groupInfo, setGroupInfo] = useState<{ [key: string]: string }>({});
-    const [fifaRankings, setFifaRankings] = useState<{ [key: string]: number }>({});
+    const [teams, setTeams] = useState<string[]>([]); // Teams from the database
+    const [flags, setFlags] = useState<{ [key: string]: string }>({}); // Store flags by team name
+    const [groupInfo, setGroupInfo] = useState<{ [key: string]: string }>({}); // Store group info by team name
+    const [fifaRankings, setFifaRankings] = useState<{ [key: string]: number }>({}); // Store FIFA ranking by team name
 
     useEffect(() => {
-
+        // Fetch teams from the API
         const fetchTeams = async () => {
             try {
                 const response = await axios.get("http://localhost:3001/api/teams");
@@ -29,10 +29,11 @@ export default function Dashboard() {
     }, []);
 
     useEffect(() => {
-                const fetchInfoForTeamA = async () => {
+        // Fetch flag, group info, and FIFA rankings for Team A
+        const fetchInfoForTeamA = async () => {
             if (selectedTeamA) {
                 try {
-
+                    // Fetch flag
                     const flagResponse = await axios.get(
                         `http://localhost:3001/api/teams/${selectedTeamA.toLowerCase()}/flag`
                     );
@@ -41,7 +42,7 @@ export default function Dashboard() {
                         [selectedTeamA]: flagResponse.data.flag,
                     }));
 
-
+                    // Fetch group info and FIFA ranking
                     const infoResponse = await axios.get(
                         `http://localhost:3001/api/compare/info/${selectedTeamA}`
                     );
@@ -59,6 +60,7 @@ export default function Dashboard() {
             }
         };
 
+        // Fetch flag, group info, and FIFA rankings for Team B
         const fetchInfoForTeamB = async () => {
             if (selectedTeamB) {
                 try {
@@ -71,7 +73,7 @@ export default function Dashboard() {
                         [selectedTeamB]: flagResponse.data.flag,
                     }));
 
-
+                    // Fetch group info and FIFA ranking
                     const infoResponse = await axios.get(
                         `http://localhost:3001/api/compare/info/${selectedTeamB}`
                     );
