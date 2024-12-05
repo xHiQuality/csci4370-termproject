@@ -1,5 +1,5 @@
 const express = require('express');
-const pool = require('../db/connection.js');
+const pool = require('../db/connection2.js');
 const router = express.Router();
 
 //Formula Logic
