@@ -7,9 +7,9 @@ const calculatePredictor = (highestRank,homeRank,awayRank,avgCapsHome,avgCapsAwa
     const randomValue = Math.random() * 40 - 20;
     return 0.4 * ((highestRank - homeRank) + (awayRank - highestRank)) +
         0.05 * (avgCapsHome - avgCapsAway) +
-        0.15 * (h2hHome - h2hAway) +
+        0.1 * (h2hHome - h2hAway) +
         0.05 * (avgGoalsHome - avgGoalsAway) +
-        .35 * randomValue;
+        .4 * randomValue;
 
 };
 

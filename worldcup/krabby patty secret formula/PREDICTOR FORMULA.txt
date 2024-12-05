@@ -1,5 +1,5 @@
 PREDICTOR FORMULA: .4((HIGHEST FIFA RANKING IN WC(61) - FIFA RANKING(HOME)) + (FIFA RANKING(AWAY) - HIGHEST FIFA RANKING IN WC(61))) + .05(Average Caps(HOME) - Average Caps(AWAY)) 
-+ .15(H2H WINS(HOME) - H2H WINS(AWAY)) + .05(Average Goals of FWD & MID (HOME) - Average Goals of FWD & MID (AWAY)) +.35(RANDOM) =
++ .1(H2H WINS(HOME) - H2H WINS(AWAY)) + .05(Average Goals of FWD & MID (HOME) - Average Goals of FWD & MID (AWAY)) +.4(RANDOM) =
 
 EXAMPLE: FRANCE vs. Denmark
 
