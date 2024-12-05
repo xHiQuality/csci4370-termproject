@@ -4,7 +4,6 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'admin',
-    password: 'samantha1234',
     database: 'world_cup',
     waitForConnections: true,
     connectionLimit: 10,
