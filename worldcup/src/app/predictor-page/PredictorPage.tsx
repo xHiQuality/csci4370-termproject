@@ -26,7 +26,7 @@ export default function PredictorPage() {
             { team1: "Team G1", team2: "Team H2", score: "2-0" },
             { team1: "Team B1", team2: "Team A2", score: "4-3" },
             { team1: "Team D1", team2: "Team C2", score: "1-0" },
-            { team1: "Team F1", team2: "Team E2", score: "2-2 " },
+            { team1: "Team F1", team2: "Team E2", score: "2-2" },
             { team1: "Team H1", team2: "Team G2", score: "1-3" },
         ],
         quarterfinals: [
@@ -37,7 +37,7 @@ export default function PredictorPage() {
         ],
         semifinals: [
             { team1: "Winner Q1", team2: "Winner Q2", score: "2-0" },
-            { team1: "Winner Q3", team2: "Winner Q4", score: "1-1 " },
+            { team1: "Winner Q3", team2: "Winner Q4", score: "1-1" },
         ],
         finals: [
             { team1: "Winner S1", team2: "Winner S2", score: "3-1" },
@@ -46,16 +46,56 @@ export default function PredictorPage() {
     };
 
     const handleSimulateBracket = () => {
-        // Mock group stage results
+        // Mock group stage results with points for all teams
         const groupResultsMock = {
-            GroupA: { winner: "Team A1", runnerUp: "Team A2" },
-            GroupB: { winner: "Team B1", runnerUp: "Team B2" },
-            GroupC: { winner: "Team C1", runnerUp: "Team C2" },
-            GroupD: { winner: "Team D1", runnerUp: "Team D2" },
-            GroupE: { winner: "Team E1", runnerUp: "Team E2" },
-            GroupF: { winner: "Team F1", runnerUp: "Team F2" },
-            GroupG: { winner: "Team G1", runnerUp: "Team G2" },
-            GroupH: { winner: "Team H1", runnerUp: "Team H2" },
+            GroupA: [
+                { team: "Team A1", points: 9 },
+                { team: "Team A2", points: 6 },
+                { team: "Team A3", points: 3 },
+                { team: "Team A4", points: 1 },
+            ],
+            GroupB: [
+                { team: "Team B1", points: 7 },
+                { team: "Team B2", points: 5 },
+                { team: "Team B3", points: 4 },
+                { team: "Team B4", points: 2 },
+            ],
+            GroupC: [
+                { team: "Team C1", points: 8 },
+                { team: "Team C2", points: 6 },
+                { team: "Team C3", points: 3 },
+                { team: "Team C4", points: 1 },
+            ],
+            GroupC: [
+                { team: "Team C1", points: 8 },
+                { team: "Team C2", points: 6 },
+                { team: "Team C3", points: 3 },
+                { team: "Team C4", points: 1 },
+            ],
+            GroupE: [
+                { team: "Team E1", points: 8 },
+                { team: "Team E2", points: 6 },
+                { team: "Team E3", points: 3 },
+                { team: "Team E4", points: 1 },
+            ],
+            GroupF: [
+                { team: "Team F1", points: 8 },
+                { team: "Team F2", points: 6 },
+                { team: "Team F3", points: 3 },
+                { team: "Team F4", points: 1 },
+            ],
+            GroupG: [
+                { team: "Team G1", points: 8 },
+                { team: "Team G2", points: 6 },
+                { team: "Team G3", points: 3 },
+                { team: "Team G4", points: 1 },
+            ],
+            GroupH: [
+                { team: "Team H1", points: 8 },
+                { team: "Team H2", points: 6 },
+                { team: "Team H3", points: 3 },
+                { team: "Team H4", points: 1 },
+            ],
         };
         setGroupResults(groupResultsMock);
         setShowBracket(true);
@@ -87,12 +127,15 @@ export default function PredictorPage() {
                 <div className={styles.resultsGroupsSection}>
                     <h2 className={styles.subtitle}>Group Stage Results</h2>
                     <div className={styles.groups}>
-                        {Object.entries(groupResults).map(([groupName, result]: any, index) => (
+                        {Object.entries(groupResults).map(([groupName, results]: any, index) => (
                             <div key={index} className={styles.groupCard}>
                                 <h3>{groupName}</h3>
                                 <ul>
-                                    <li>Winner: {result.winner}</li>
-                                    <li>Runner-Up: {result.runnerUp}</li>
+                                    {results.map((result: any, idx: number) => (
+                                        <li key={idx}>
+                                            {result.team} - {result.points} points
+                                        </li>
+                                    ))}
                                 </ul>
                             </div>
                         ))}
