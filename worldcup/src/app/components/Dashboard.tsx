@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import axios from 'axios';
 import { useEffect, useState } from "react";
 import styles from "./Dashboard.module.css";
 
