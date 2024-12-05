@@ -66,7 +66,7 @@ export default function PredictorPage() {
                 { team: "Team C3", points: 3 },
                 { team: "Team C4", points: 1 },
             ],
-            GroupC: [
+            GroupD: [
                 { team: "Team C1", points: 8 },
                 { team: "Team C2", points: 6 },
                 { team: "Team C3", points: 3 },
