@@ -307,19 +307,19 @@ router.get('/all-group-predictions', async (req,res) => {
                 parseFloat(homeStats.avg_goals) || 0, 
                 parseFloat(awayStats.avg_goals) || 0  
             );
-            console.log(`Calculating predictor for:`, {
-                        homeTeam: homeTeam.team,
-                        awayTeam: awayTeam.team,
-                        highestRank: 61,
-                        homeRank: homeFifaRanking.FIFA_Ranking,
-                        awayRank: awayFifaRanking.FIFA_Ranking,
-                        avgCapsHome: homeStats?.avg_caps || 0,
-                        avgCapsAway: awayStats?.avg_caps || 0,
-                        h2hHome: homeH2HPoints?.h2h_points || 0,
-                        h2hAway: awayH2HPoints?.h2h_points || 0,
-                        avgGoalsHome: homeStats?.avg_goals || 0,
-                        avgGoalsAway: awayStats?.avg_goals || 0,
-                    });
+            // console.log(`Calculating predictor for:`, {
+            //             homeTeam: homeTeam.team,
+            //             awayTeam: awayTeam.team,
+            //             highestRank: 61,
+            //             homeRank: homeFifaRanking.FIFA_Ranking,
+            //             awayRank: awayFifaRanking.FIFA_Ranking,
+            //             avgCapsHome: homeStats?.avg_caps || 0,
+            //             avgCapsAway: awayStats?.avg_caps || 0,
+            //             h2hHome: homeH2HPoints?.h2h_points || 0,
+            //             h2hAway: awayH2HPoints?.h2h_points || 0,
+            //             avgGoalsHome: homeStats?.avg_goals || 0,
+            //             avgGoalsAway: awayStats?.avg_goals || 0,
+            //         });
 
             const winner = result >= 0 ? homeTeam.team : awayTeam.team;
 
