@@ -165,9 +165,30 @@ router.get('/all-group-predictions', async (req,res) => {
             }
 
             // Sort teams by points in descending order
-            const sortedTeamPoints = Object.entries(teamPoints)
+            let sortedTeamPoints = Object.entries(teamPoints)
                 .map(([team, points]) => ({ team, points }))
                 .sort((a, b) => b.points - a.points);
+
+                sortedTeamPoints = sortedTeamPoints.reduce((acc, teamObj, idx, arr) => {
+                    if (idx > 0 && teamObj.points === arr[idx - 1].points) {
+                        // Coin flip for teams with the same points
+                        const coinFlip = Math.random() > 0.5 ? 1 : -1;
+                        if (coinFlip > 0) {
+                            acc.push(teamObj); // Push current team as is
+                        } else {
+                            // Swap current team with the previous one
+                            const previousTeam = acc.pop();
+                            acc.push(teamObj, previousTeam);
+                        }
+                    } else {
+                        acc.push(teamObj);
+                    }
+                    return acc;
+                }, []);
+
+                sortedTeamPoints.forEach((teamObj, index) => {
+                    teamObj.seed = `${index + 1}${groupName}`;
+                });
 
             allResults[groupName] = {
                 //matchups: groupResults,
