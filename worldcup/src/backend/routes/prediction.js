@@ -165,32 +165,9 @@ router.get('/all-group-predictions', async (req,res) => {
             }
 
             // Sort teams by points in descending order
-            let sortedTeamPoints = Object.entries(teamPoints)
+            const sortedTeamPoints = Object.entries(teamPoints)
                 .map(([team, points]) => ({ team, points }))
                 .sort((a, b) => b.points - a.points);
-
-
-            sortedTeamPoints = sortedTeamPoints.reduce((acc, teamObj, i, arr) => {
-                if (i > 0 && teamObj.points === arr[i - 1].points) {
-                        // Coin flip for teams with the same points
-                    const coinFlip = Math.random() > 0.5 ? 1 : -1;
-                    if (coinFlip > 0) {
-                        acc.push(teamObj); 
-                    } else {
-                            
-                        const previousTeam = acc.pop();
-                        acc.push(teamObj, previousTeam);
-                    }
-                } else {
-                    acc.push(teamObj);
-                }
-                return acc;
-            }, []);
-
-            // Add playoff seed labels (1A, 2A, etc.)
-            sortedTeamPoints.forEach((teamObj, index) => {
-                teamObj.seed = `${index + 1}${groupName}`;
-            });
 
             allResults[groupName] = {
                 //matchups: groupResults,
@@ -198,9 +175,8 @@ router.get('/all-group-predictions', async (req,res) => {
             }
             // console.log('Group Results:', JSON.stringify(groupResults, null, 2));
             // console.log('All Results:', JSON.stringify(allResults, null, 2));
-            
+
         }
-        
         console.log(
             'All Results:',
             JSON.stringify(allResults, null, 2) 
