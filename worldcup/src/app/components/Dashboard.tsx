@@ -8,11 +8,13 @@ export default function Dashboard() {
     const [selectedTeamA, setSelectedTeamA] = useState("");
     const [selectedTeamB, setSelectedTeamB] = useState("");
     const [comparisonData, setComparisonData] = useState<any>(null);
-    const [teams, setTeams] = useState<string[]>([]); // Teams from the database
-    const [flags, setFlags] = useState<{ [key: string]: string }>({}); // Store flags by team name
+    const [teams, setTeams] = useState<string[]>([]);
+    const [flags, setFlags] = useState<{ [key: string]: string }>({});
+    const [groupInfo, setGroupInfo] = useState<{ [key: string]: string }>({});
+    const [fifaRankings, setFifaRankings] = useState<{ [key: string]: number }>({});
 
     useEffect(() => {
-        // Fetch teams from the API
+
         const fetchTeams = async () => {
             try {
                 const response = await axios.get("http://localhost:3001/api/teams");
@@ -27,42 +29,68 @@ export default function Dashboard() {
     }, []);
 
     useEffect(() => {
-        // Fetch flag for Team A
-        const fetchFlagForTeamA = async () => {
+                const fetchInfoForTeamA = async () => {
             if (selectedTeamA) {
                 try {
-                    const response = await axios.get(
+
+                    const flagResponse = await axios.get(
                         `http://localhost:3001/api/teams/${selectedTeamA.toLowerCase()}/flag`
                     );
                     setFlags((prevFlags) => ({
                         ...prevFlags,
-                        [selectedTeamA]: response.data.flag,
+                        [selectedTeamA]: flagResponse.data.flag,
+                    }));
+
+
+                    const infoResponse = await axios.get(
+                        `http://localhost:3001/api/compare/info/${selectedTeamA}`
+                    );
+                    setGroupInfo((prevGroupInfo) => ({
+                        ...prevGroupInfo,
+                        [selectedTeamA]: infoResponse.data[0]?.Group || "N/A",
+                    }));
+                    setFifaRankings((prevRankings) => ({
+                        ...prevRankings,
+                        [selectedTeamA]: infoResponse.data[0]?.FIFA_Ranking || "N/A",
                     }));
                 } catch (error) {
-                    console.error(`Error fetching flag for ${selectedTeamA}:`, error);
+                    console.error(`Error fetching info for ${selectedTeamA}:`, error);
                 }
             }
         };
 
-        // Fetch flag for Team B
-        const fetchFlagForTeamB = async () => {
+        const fetchInfoForTeamB = async () => {
             if (selectedTeamB) {
                 try {
-                    const response = await axios.get(
+                    // Fetch flag
+                    const flagResponse = await axios.get(
                         `http://localhost:3001/api/teams/${selectedTeamB.toLowerCase()}/flag`
                     );
                     setFlags((prevFlags) => ({
                         ...prevFlags,
-                        [selectedTeamB]: response.data.flag,
+                        [selectedTeamB]: flagResponse.data.flag,
+                    }));
+
+
+                    const infoResponse = await axios.get(
+                        `http://localhost:3001/api/compare/info/${selectedTeamB}`
+                    );
+                    setGroupInfo((prevGroupInfo) => ({
+                        ...prevGroupInfo,
+                        [selectedTeamB]: infoResponse.data[0]?.Group || "N/A",
+                    }));
+                    setFifaRankings((prevRankings) => ({
+                        ...prevRankings,
+                        [selectedTeamB]: infoResponse.data[0]?.FIFA_Ranking || "N/A",
                     }));
                 } catch (error) {
-                    console.error(`Error fetching flag for ${selectedTeamB}:`, error);
+                    console.error(`Error fetching info for ${selectedTeamB}:`, error);
                 }
             }
         };
 
-        fetchFlagForTeamA();
-        fetchFlagForTeamB();
+        fetchInfoForTeamA();
+        fetchInfoForTeamB();
     }, [selectedTeamA, selectedTeamB]);
 
     const handleCompare = () => {
@@ -70,8 +98,6 @@ export default function Dashboard() {
         const mockData = {
             headToHeadHistory:
                 `${selectedTeamA} and ${selectedTeamB} have played 10 matches. ${selectedTeamA} won 6, and ${selectedTeamB} won 4.`,
-            groupInfo: { teamA: "Group A", teamB: "Group B" },
-            fifaRankings: { teamA: "#5", teamB: "#10" },
         };
 
         setComparisonData(mockData);
@@ -167,19 +193,19 @@ export default function Dashboard() {
                             <div className={styles.statsBox}>
                                 <h4>Group Information</h4>
                                 <p>
-                                    {selectedTeamA}: {comparisonData.groupInfo.teamA}
+                                    {selectedTeamA}: {groupInfo[selectedTeamA] || "N/A"}
                                 </p>
                                 <p>
-                                    {selectedTeamB}: {comparisonData.groupInfo.teamB}
+                                    {selectedTeamB}: {groupInfo[selectedTeamB] || "N/A"}
                                 </p>
                             </div>
                             <div className={styles.statsBox}>
                                 <h4>FIFA Rankings</h4>
                                 <p>
-                                    {selectedTeamA}: {comparisonData.fifaRankings.teamA}
+                                    {selectedTeamA}: {fifaRankings[selectedTeamA] || "N/A"}
                                 </p>
                                 <p>
-                                    {selectedTeamB}: {comparisonData.fifaRankings.teamB}
+                                    {selectedTeamB}: {fifaRankings[selectedTeamB] || "N/A"}
                                 </p>
                             </div>
                         </div>
