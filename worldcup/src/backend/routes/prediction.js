@@ -620,9 +620,13 @@ router.get('/all-group-predictions', async (req,res) => {
         
         res.json({
             groupResults: allResults,
+            topTwoSeeds,
             roundOf16Results,
+            quarterFinalMatchups,
             quarterFinalResults,
+            semiFinalMatchups,
             semiFinalResults,
+            finalMatchups,
             finalResults,
             champion
         });
