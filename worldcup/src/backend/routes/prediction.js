@@ -4,7 +4,7 @@ const router = express.Router();
 
 //Formula Logic
 const calculatePredictor = (highestRank,homeRank,awayRank,avgCapsHome,avgCapsAway,h2hHome,h2hAway,avgGoalsHome,avgGoalsAway) => {
-    const randomValue = Math.random() * 40 - 20;
+    const randomValue = Math.random() * 60 - 30;
     return 0.4 * ((highestRank - homeRank) + (awayRank - highestRank)) +
         0.05 * (avgCapsHome - avgCapsAway) +
         0.1 * (h2hHome - h2hAway) +
