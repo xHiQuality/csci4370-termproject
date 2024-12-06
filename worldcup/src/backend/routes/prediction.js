@@ -2,7 +2,20 @@ const express = require('express');
 const pool = require('../db/connection2.js');
 const router = express.Router();
 
-//Formula Logic
+/**
+ * The formula used to determine who wins each game in a simulation. Equal teams should return 0. < -1 = Lose for Home Team. -1 <= x <= 1 = DRAW. > 1 = Win for Home.
+ * @param {*} highestRank 61 - Ghana is the worst team via FIFA Rankings so this is the ceiling
+ * @param {*} homeRank FIFA Ranking of Home team in simulation match
+ * @param {*} awayRank FIFA Ranking of Away team in simulation match
+ * @param {*} avgCapsHome Average amount of games a player on the home team has played
+ * @param {*} avgCapsAway Average amount of games a player on the away team has played
+ * @param {*} h2hHome Head to head result historically vs. away team
+ * @param {*} h2hAway Head to head result historically vs. home team
+ * @param {*} avgGoalsHome Average amount of goals a player (Forward, Midfielder) has scored on the home team
+ * @param {*} avgGoalsAway Average amount of goals a player (Forward, Midfielder) has scored on the away team
+ * @author Cason Pittman
+ * @returns 
+ */
 const calculatePredictor = (highestRank,homeRank,awayRank,avgCapsHome,avgCapsAway,h2hHome,h2hAway,avgGoalsHome,avgGoalsAway) => {
     const randomValue = Math.random() * 60 - 30;
     return 0.4 * ((highestRank - homeRank) + (awayRank - highestRank)) +
@@ -13,7 +26,11 @@ const calculatePredictor = (highestRank,homeRank,awayRank,avgCapsHome,avgCapsAwa
 
 };
 
-//API endpoint for group predictions
+/**
+ * Route to simulate entire tournament, takes each group and plays all matches in the group (each team plays 3). Then based on top 2 teams from each group
+ * the playoff gets initialized and the process repeats with the difference that draws are no longer possible. See in line comments for more.
+ * @author Cason Pittman
+ */
 router.get('/all-group-predictions', async (req,res) => {
     try {
         
@@ -23,7 +40,7 @@ router.get('/all-group-predictions', async (req,res) => {
 
         const allResults = {};
         const topTwoSeeds = [];
-
+        //loop for each group
         for (const groupName of groups) {
            
 
@@ -42,7 +59,7 @@ router.get('/all-group-predictions', async (req,res) => {
             teams.forEach(team => {
                 teamPoints[team.Team] = 0;
             });
-
+            //logic for simming each game in group
             for (let i = 0; i < teams.length; i++) {
                 for (let j = i + 1; j < teams.length; j++) {
                     const homeTeam = teams[i];
@@ -172,7 +189,7 @@ router.get('/all-group-predictions', async (req,res) => {
 
                 sortedTeamPoints = sortedTeamPoints.reduce((acc, teamObj, idx, arr) => {
                     if (idx > 0 && teamObj.points === arr[idx - 1].points) {
-                        // Coin flip for teams with the same points
+                        // Coin flip for teams with the same points (Tiebreaker)
                         const coinFlip = Math.random() > 0.5 ? 1 : -1;
                         if (coinFlip > 0) {
                             acc.push(teamObj); // Push current team as is
@@ -224,7 +241,7 @@ router.get('/all-group-predictions', async (req,res) => {
         const quarterFinalSeeds = [];
         const semiFinalSeeds = [];
         const finalSeeds = [];
-
+        //loop for Rof16
         for (const matchup of roundOf16Matchups) {
             const homeTeam = findTeam(matchup.home);
             const awayTeam = findTeam(matchup.away);
@@ -329,7 +346,7 @@ router.get('/all-group-predictions', async (req,res) => {
             });
             quarterFinalSeeds.push(winner);
         }
-        
+        //store quarter final matchups for simulation
         const quarterFinalMatchups = [
             { home: quarterFinalSeeds[0], away: quarterFinalSeeds[1] },
             { home: quarterFinalSeeds[2], away: quarterFinalSeeds[3] },
@@ -660,7 +677,10 @@ router.get('/all-group-predictions', async (req,res) => {
 
 
 
-//Route to get all 4 teams in a specific group
+/**
+ * Route to get teams in a group
+ * @author Cason Pittman
+ */
 router.get('/:group', async (req,res) => {
     const { group } = req.params;
 
@@ -683,6 +703,9 @@ router.get('/:group', async (req,res) => {
     }
 });
 
+/**
+ * SEAN DO JAVADOC AND AUTHOR
+ */
 router.get('/matches/:team1/:team2', async (req,res) => {
     const { team1,team2 } = req.params;
 

@@ -3,6 +3,7 @@ const pool = require('../db/connection.js');
 const router = express.Router();
 
 //Route get all players on a selected team (Player Name, Position, Age, Caps, Goals)
+// @author Cason Pittman
 router.get('/:team', async (req, res) => {
     const { team } = req.params;
 
