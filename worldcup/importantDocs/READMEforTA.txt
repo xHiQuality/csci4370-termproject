@@ -20,7 +20,7 @@ The Dashboard allows you to compare 2 different teams in the World Cup. All data
 The Favorite Team page is a more in depth look at a specific team and uses aggregate functions to see top goal scorers and players with most appearances.
 
 The Holy Grail is the Predictor page which, on each run simulates the tournament using multiple queries and a prediction formula. The formula can be found in
-worldcup/krabby patty secret formula. It is complex taking in many variables and multiple queries. This formula is self made and contains what I believe to be
+worldcup/importantDocs/krabby patty secret formula. It is complex taking in many variables and multiple queries. This formula is self made and contains what I believe to be
 fair weights and qualifiers for a good football team. Try this page multiple times and see the results!
 
 The code for the Tournament simulation can be found at worldcup/src/backend/routes/prediction.js under the all-group-predictions route OR in postman
