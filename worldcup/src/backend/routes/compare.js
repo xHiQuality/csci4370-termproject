@@ -2,6 +2,14 @@ const express = require('express');
 const pool = require('../db/connection.js');
 const router = express.Router();
 
+/**
+ *  Route to get the historical head to head of matches between team1 and team2
+ * 
+ *  @param team1 A country name to compare against team2
+ *  @param team2 A country name to compare against team1
+ * 
+ *  @author Sean Malavet
+ */
 router.get('/matches/:team1/:team2', async (req,res) => {
     const { team1,team2 } = req.params;
 
@@ -62,6 +70,13 @@ GROUP BY Team1;
 });
 
 
+/**
+ * Route to get the FIFA Ranking and 2022 World Cup Group for a given team
+ * 
+ * @param team The team to search the database for
+ * 
+ * @author Sean Malavet
+ */
 router.get('/info/:team/', async (req,res) => {
     const { team } = req.params;
 
