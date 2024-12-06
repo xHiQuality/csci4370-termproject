@@ -5,16 +5,19 @@ import { useEffect, useState } from "react";
 import styles from "./Dashboard.module.css";
 
 export default function Dashboard() {
-    const [selectedTeamA, setSelectedTeamA] = useState("");
-    const [selectedTeamB, setSelectedTeamB] = useState("");
-    const [comparisonData, setComparisonData] = useState<any>(null);
-    const [teams, setTeams] = useState<string[]>([]); // Teams from the database
-    const [flags, setFlags] = useState<{ [key: string]: string }>({}); // Store flags by team name
-    const [groupInfo, setGroupInfo] = useState<{ [key: string]: string }>({}); // Store group info by team name
-    const [fifaRankings, setFifaRankings] = useState<{ [key: string]: number }>({}); // Store FIFA ranking by team name
+    const [selectedTeamA, setSelectedTeamA] = useState(""); // Stores the currently selected Team A
+    const [selectedTeamB, setSelectedTeamB] = useState(""); // Stores the currently selected Team B
+    const [comparisonData, setComparisonData] = useState<any>(null); // Stores data for team comparison
+    const [teams, setTeams] = useState<string[]>([]); // List of teams fetched from the database
+    const [flags, setFlags] = useState<{ [key: string]: string }>({}); // Stores flags by team name
+    const [groupInfo, setGroupInfo] = useState<{ [key: string]: string }>({}); // Stores group info by team name
+    const [fifaRankings, setFifaRankings] = useState<{ [key: string]: number }>({}); // Stores FIFA ranking by team name
 
+    /**
+     * @function useEffect - Fetches the list of teams from the API when the component mounts.
+     * @author Samantha Macaluso
+     */
     useEffect(() => {
-        // Fetch teams from the API
         const fetchTeams = async () => {
             try {
                 const response = await axios.get("http://localhost:3001/api/teams");
@@ -28,12 +31,16 @@ export default function Dashboard() {
         fetchTeams();
     }, []);
 
+    /**
+     * @function useEffect - Fetches flags, group information, and FIFA rankings for the selected teams.
+     * Updates the states `flags`, `groupInfo`, and `fifaRankings` accordingly.
+     * Triggered whenever `selectedTeamA` or `selectedTeamB` changes.
+     * @author Samantha Macaluso
+     */
     useEffect(() => {
-        // Fetch flag, group info, and FIFA rankings for Team A
         const fetchInfoForTeamA = async () => {
             if (selectedTeamA) {
                 try {
-                    // Fetch flag
                     const flagResponse = await axios.get(
                         `http://localhost:3001/api/teams/${selectedTeamA.toLowerCase()}/flag`
                     );
@@ -42,7 +49,6 @@ export default function Dashboard() {
                         [selectedTeamA]: flagResponse.data.flag,
                     }));
 
-                    // Fetch group info and FIFA ranking
                     const infoResponse = await axios.get(
                         `http://localhost:3001/api/compare/info/${selectedTeamA}`
                     );
@@ -60,11 +66,9 @@ export default function Dashboard() {
             }
         };
 
-        // Fetch flag, group info, and FIFA rankings for Team B
         const fetchInfoForTeamB = async () => {
             if (selectedTeamB) {
                 try {
-                    // Fetch flag
                     const flagResponse = await axios.get(
                         `http://localhost:3001/api/teams/${selectedTeamB.toLowerCase()}/flag`
                     );
@@ -73,7 +77,6 @@ export default function Dashboard() {
                         [selectedTeamB]: flagResponse.data.flag,
                     }));
 
-                    // Fetch group info and FIFA ranking
                     const infoResponse = await axios.get(
                         `http://localhost:3001/api/compare/info/${selectedTeamB}`
                     );
@@ -95,8 +98,12 @@ export default function Dashboard() {
         fetchInfoForTeamB();
     }, [selectedTeamA, selectedTeamB]);
 
+    /**
+     * @function handleCompare - Mocks comparison data for the selected teams
+     * and updates the `comparisonData` state.
+     * @author Samantha Macaluso
+     */
     const handleCompare = () => {
-        // Mock data for comparison
         const mockData = {
             headToHeadHistory:
                 `${selectedTeamA} and ${selectedTeamB} have played 10 matches. ${selectedTeamA} won 6, and ${selectedTeamB} won 4.`,

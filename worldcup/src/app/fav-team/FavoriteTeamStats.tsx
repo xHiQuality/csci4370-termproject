@@ -5,12 +5,16 @@ import React, { useEffect, useState } from "react";
 import styles from "./FavoriteTeamStats.module.css";
 
 export default function FavoriteTeamStats() {
-    const [teams, setTeams] = useState([]);
-    const [teamName, setTeamName] = useState("");
-    const [teamData, setTeamData] = useState<any>(null);
+    const [teams, setTeams] = useState([]); // List of teams fetched from the API
+    const [teamName, setTeamName] = useState(""); // Selected team name
+    const [teamData, setTeamData] = useState<any>(null); // Team data including flag, top scorers, caps, and player stats
 
+    /**
+     * @function useEffect - Fetches the list of teams from the API when the component mounts.
+     * Updates the `teams` state with the fetched team data.
+     * @author Samantha Macaluso
+     */
     useEffect(() => {
-        // Fetch teams from the API
         const fetchTeams = async () => {
             try {
                 const response = await axios.get("http://localhost:3001/api/teams");
@@ -23,6 +27,13 @@ export default function FavoriteTeamStats() {
         fetchTeams();
     }, []);
 
+    /**
+     * @function handleSubmit - Handles the form submission to fetch data for the selected team.
+     * Fetches the team flag, top 3 goal scorers, top 3 caps, and player statistics.
+     * Updates the `teamData` state with the fetched data.
+     * @param {React.FormEvent} e - The form event triggered on submission.
+     * @author Samantha Macaluso
+     */
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 

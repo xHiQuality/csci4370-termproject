@@ -5,17 +5,22 @@ import { useEffect, useState } from "react";
 import styles from "./PredictorPage.module.css";
 
 export default function PredictorPage() {
-    const [showBracket, setShowBracket] = useState(false);
-    const [groupResults, setGroupResults] = useState<any>(null);
-    const [knockoutStages, setKnockoutStages] = useState<any>(null);
+    const [showBracket, setShowBracket] = useState(false); // State to toggle visibility of knockout stage bracket
+    const [groupResults, setGroupResults] = useState<any>(null); // Stores group stage predictions
+    const [knockoutStages, setKnockoutStages] = useState<any>(null); // Stores knockout stage matchups and results
 
-    // Fetch group predictions and knockout stage data
+    /**
+     * @function useEffect - Fetches group stage predictions and knockout stage data from the API when the component mounts.
+     * Updates `groupResults` and `knockoutStages` state with the fetched data.
+     * @author Samantha Macaluso
+     */
     useEffect(() => {
         const fetchGroupPredictions = async () => {
             try {
                 const response = await axios.get(
                     "http://localhost:3001/api/predictor/all-group-predictions"
                 );
+
                 setGroupResults(response.data.groupResults);
                 setKnockoutStages({
                     roundOf16: response.data.roundOf16Results || [],
